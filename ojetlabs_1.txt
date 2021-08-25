@@ -1,0 +1,217 @@
+----------------------------------------------------------------------------------------
+Lab #1
+----------------------------------------------------------------------------------------
+
+Objective:
+Installation of node.js and npm
+Installation of OJET CLI 
+Creating and running the OJET project
+Analysing the folder structure
+
+----------------------------------------------------------------------------------------
+Lab #2
+----------------------------------------------------------------------------------------
+
+Objective:
+To understand data binding using knockout observables in OJET environment
+
+Reference:
+https://knockoutjs.com/documentation/textinput-binding.html
+https://knockoutjs.com/documentation/value-binding.html
+
+
+Step 1:
+Create OJET project with navdrawer template
+Follow the instruction from the instructor
+
+Step: 2
+HTML: dashboard.html
+
+<div>
+      <h6>Name : <input data-bind="textInput:name"> </h6>
+      <h6>Age  : <input data-bind="textInput:age"> </h6>
+      <hr>
+      <h3>Your name is <span data-bind="text:name"> </span> and age is <span data-bind="text:age"> </span><h3>
+</div>
+
+Step 3:
+JS: dashboard.js
+
+    // Observables for name and age
+    self.name = ko.observable("Purushotham");
+    self.age  = ko.observable("35");
+
+Does it work as expected?
+What's the solution?
+
+----------------------------------------------------------------------------------------
+Lab #3
+----------------------------------------------------------------------------------------
+
+Objective:
+To understand data binding using knockout observableArray in OJET environment
+To understand the basics of using OJET components
+
+Step 1:
+Use the OJET project created in Lab #1
+Follow the instruction given by the instrutor
+
+Step: 2
+HTML: dashboard.html
+
+  <h3>Please follow the statistics</h3>
+  <div data-bind="ojComponent:{ component: 'ojChart', type: 'bar', series: datasource }">
+  </div>
+
+Step: 3
+JS: dashboard.js
+
+      //Observable array for data
+      var data = [
+                    {name:"Pedestrians", items:[42]},
+                    {name:"Vehicles", items:[82]},
+                    {name:"Bicycles", items:[20]},
+                    {name:"Busses", items:[76]},
+                    {name:"Trains", items:[31]}
+                  
+                  ];
+
+      self.datasource = ko.observableArray(data);
+
+Step: 4
+JS: dashboard.js
+
+Observe the browser, is the chart being displayed?
+To resolve:
+Add ojs/ojchart to the list of module requirements
+
+Step : 5
+
+<oj-chart type = "pie" series ="[[datasource]]">
+</oj-chart>
+
+Step: 6
+
+Change the chart style to "pie"
+
+Step: 6
+
+Questions/assignments:
+
+1. How to change the size of the chart?
+
+
+----------------------------------------------------------------------------------------
+Lab #4
+----------------------------------------------------------------------------------------
+
+Objective:
+To understand the technique for loading data from an external file
+
+Step 1:
+Use the OJET project used in Lab #3
+Follow the instruction given by the instrutor
+
+Step 2:
+HTML: dashboard.html
+
+Add the following to the existing code:
+
+  <h3>Your time should be distributed the following way</h3>
+  <div data-bind="ojComponent:{ component: 'ojChart', type: 'pie', series: datasource2 }">
+  </div>
+
+Step 3:
+Create a json file called data/data.json in js folder with following data:
+
+[
+    {"name":"Work", "items":[8]},
+    {"name":"Play", "items":[3]},
+    {"name":"Eat", "items":[2]},
+    {"name":"Homework", "items":[3]},
+    {"name":"Exercise", "items":[1]},
+    {"name":"Sleep", "items":[6]},
+    {"name":"Netflix", "items":[1]}
+                  
+]
+
+Then prettify the file for a neat JSON format
+PS: JSON file needs the keys to be in quotes
+
+Step: 4
+JS: dashboard.js
+
+Add the code:
+    var data2 = JSON.parse(file);
+    self.datasource2 = ko.observableArray(data2);
+
+Add the text reference for file
+    text!data/data.json  -> in module requirements, text protocol/plugin from Require JS 
+    file                 -> in the function parameters
+Note that the order should be maintained
+
+
+----------------------------------------------------------------------------------------
+Lab #5
+----------------------------------------------------------------------------------------
+
+Objective:
+Understanding and exploring the appController.js, main.js and router configuration
+Creating new modules
+
+Step: 1
+Create employees.html in js/views
+
+<div class="oj-hybrid-padding">
+  <h1>Employees</h1>
+</div>
+
+Step: 2
+Create employees.js in js/viewModels
+PS: It's basically a Require JS module
+
+define(['accUtils', 'knockout', 'jquery'],
+ function(accUtils, ko, $) {
+    function EmployeesViewModel() {
+        
+    }
+    return EmployeesViewModel;
+  }
+);
+
+
+Step: 3
+Hook-up the view-viewModel to the application in appController.js
+
+Add the following to navData:
+{ path: 'employees', detail: { label: 'Employees', iconClass: 'oj-ux-ico-information-s' } },
+
+
+Step: 4
+Test with a simple ko observable
+
+employees.html
+
+<div class="oj-hybrid-padding">
+  <h1>Employees</h1>
+  <div>
+      <h6>Name : <input data-bind="textInput:name"> </h6>
+      <hr>
+      <h3>Your name is <span data-bind="text:name"> </span><h3>
+  </div>
+</div>
+
+employees.js
+
+define(['accUtils', 'knockout', 'jquery'],
+ function(accUtils, ko, $) {
+    function EmployeesViewModel() {
+        var self = this;
+        self.name = ko.observable("Raj");
+    }
+    return EmployeesViewModel;
+  }
+);
+
+A module called "employees" is created
+
