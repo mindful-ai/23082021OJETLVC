@@ -1,0 +1,22 @@
+<div>
+    <div data-bind="style: { display : (dispControl() == 'N' ? 'inline' : 'none') }">
+        <h1>Login Page</h1>
+        <oj-form-layout>
+            <h5>User Name: </h5>
+            <oj-input-text id="text-input" value="{{user}}"></oj-input-text>
+            <h5> Password: </h5>
+            <oj-input-password id="password" value="{{pwd}}" label-hint="password"></oj-input-password>
+            <oj-button id="chroming_button4" chroming="callToAction" on-oj-action="[[clickListenerLogin]]">
+                        Login
+            </oj-button>
+            
+        </oj-form-layout>
+    </div>
+    <div data-bind="style: { display : (dispControl() == 'N' ? 'none' : 'inline') }">
+        <h1>You are logged in as <span data-bind="text: user"></span></h1>
+        <oj-button id="chroming_button4" chroming="callToAction" on-oj-action="[[clickListenerLogout]]">
+            Logout
+        </oj-button>
+    </div>
+    <h5>Note: <span data-bind="text: info"></span></h5>
+</div>
